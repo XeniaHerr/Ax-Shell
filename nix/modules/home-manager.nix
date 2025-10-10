@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
@@ -28,17 +33,50 @@ let
         reload_apps = true;
         wallpaper = {
           command = "swww";
-          arguments = [ "img" "-t" "fade" "--transition-duration" "0.5" "--transition-step" "255" "--transition-fps" "60" "-f" "Nearest" ];
+          arguments = [
+            "img"
+            "-t"
+            "fade"
+            "--transition-duration"
+            "0.5"
+            "--transition-step"
+            "255"
+            "--transition-fps"
+            "60"
+            "-f"
+            "Nearest"
+          ];
           set = true;
         };
         custom_colors = {
-          red = { color = "#FF0000"; blend = true; };
-          green = { color = "#00FF00"; blend = true; };
-          yellow = { color = "#FFFF00"; blend = true; };
-          blue = { color = "#0000FF"; blend = true; };
-          magenta = { color = "#FF00FF"; blend = true; };
-          cyan = { color = "#00FFFF"; blend = true; };
-          white = { color = "#FFFFFF"; blend = true; };
+          red = {
+            color = "#FF0000";
+            blend = true;
+          };
+          green = {
+            color = "#00FF00";
+            blend = true;
+          };
+          yellow = {
+            color = "#FFFF00";
+            blend = true;
+          };
+          blue = {
+            color = "#0000FF";
+            blend = true;
+          };
+          magenta = {
+            color = "#FF00FF";
+            blend = true;
+          };
+          cyan = {
+            color = "#00FFFF";
+            blend = true;
+          };
+          white = {
+            color = "#FFFFFF";
+            blend = true;
+          };
         };
       };
       templates = {
@@ -53,9 +91,10 @@ let
         };
       };
     };
-    axShellJson = settings:
-      pkgs.writeText "ax-shell-config.json"
-        (builtins.toJSON (
+    axShellJson =
+      settings:
+      pkgs.writeText "ax-shell-config.json" (
+        builtins.toJSON (
           {
             wallpapers_dir = settings.wallpapersDir;
             terminal_command = settings.terminalCommand;
@@ -107,7 +146,8 @@ let
             in
             prefixes // suffixes
           )
-        ));
+        )
+      );
   };
 
   wrappedPackage =
@@ -120,7 +160,8 @@ let
             packageStylesPath = "${cfg.package}/share/ax-shell/styles";
             absoluteColorsImport = ''@import url("${paths.axShellColorsCss}");'';
             contentWithAbsolutePaths =
-              lib.replaceStrings (lib.mapAttrsToList (n: _: ''./styles/${n}'') (builtins.readDir packageStylesPath))
+              lib.replaceStrings
+                (lib.mapAttrsToList (n: _: ''./styles/${n}'') (builtins.readDir packageStylesPath))
                 (lib.mapAttrsToList (n: _: ''${packageStylesPath}/${n}'') (builtins.readDir packageStylesPath))
                 originalContent;
           in
@@ -138,7 +179,8 @@ let
           --set AX_SHELL_MATUGEN_BIN "${binaries.matugen}" \
           --set XCURSOR_THEME "${cfg.settings.cursor.theme}" \
           --set XCURSOR_SIZE "${toString cfg.settings.cursor.size}" \
-          --prefix XCURSOR_PATH : "${cfg.settings.cursor.package}/share/icons"
+          --prefix XCURSOR_PATH : "${cfg.settings.cursor.package}/share/icons" \
+          --prefix XDG_DATA_DIRS : "${config.home.profileDirectory}/share"
       '';
     };
 
@@ -151,7 +193,10 @@ let
 
     reload = pkgs.writeShellApplication {
       name = "ax-shell-reload";
-      runtimeInputs = [ pkgs.procps pkgs.psmisc ];
+      runtimeInputs = [
+        pkgs.procps
+        pkgs.psmisc
+      ];
       text = ''
         #!${pkgs.stdenv.shell}
         killall ax-shell
@@ -279,7 +324,12 @@ in
       };
       bar = {
         position = mkOption {
-          type = types.enum [ "Top" "Bottom" "Left" "Right" ];
+          type = types.enum [
+            "Top"
+            "Bottom"
+            "Left"
+            "Right"
+          ];
           default = "Top";
           description = "The position of the main bar.";
         };
@@ -358,7 +408,10 @@ in
       };
       notifications = {
         position = mkOption {
-          type = types.enum [ "Top" "Bottom" ];
+          type = types.enum [
+            "Top"
+            "Bottom"
+          ];
           default = "Top";
           description = "The position of notifications.";
         };
@@ -419,31 +472,87 @@ in
         };
       };
       keybindings = mkOption {
-        type = with types; attrsOf (submodule {
-          options = {
-            prefix = mkOption { type = types.str; };
-            suffix = mkOption { type = types.str; };
-          };
-        });
+        type =
+          with types;
+          attrsOf (submodule {
+            options = {
+              prefix = mkOption { type = types.str; };
+              suffix = mkOption { type = types.str; };
+            };
+          });
         default = {
-          restart = { prefix = "SUPER ALT"; suffix = "B"; };
-          axmsg = { prefix = "SUPER"; suffix = "A"; };
-          dash = { prefix = "SUPER"; suffix = "D"; };
-          bluetooth = { prefix = "SUPER"; suffix = "B"; };
-          pins = { prefix = "SUPER"; suffix = "Q"; };
-          kanban = { prefix = "SUPER"; suffix = "N"; };
-          launcher = { prefix = "SUPER"; suffix = "R"; };
-          tmux = { prefix = "SUPER"; suffix = "T"; };
-          cliphist = { prefix = "SUPER"; suffix = "V"; };
-          toolbox = { prefix = "SUPER"; suffix = "S"; };
-          overview = { prefix = "SUPER"; suffix = "TAB"; };
-          wallpapers = { prefix = "SUPER"; suffix = "COMMA"; };
-          randwall = { prefix = "SUPER SHIFT"; suffix = "COMMA"; };
-          mixer = { prefix = "SUPER"; suffix = "M"; };
-          emoji = { prefix = "SUPER"; suffix = "PERIOD"; };
-          power = { prefix = "SUPER"; suffix = "ESCAPE"; };
-          caffeine = { prefix = "SUPER SHIFT"; suffix = "M"; };
-          restart_inspector = { prefix = "SUPER CTRL ALT"; suffix = "B"; };
+          restart = {
+            prefix = "SUPER ALT";
+            suffix = "B";
+          };
+          axmsg = {
+            prefix = "SUPER";
+            suffix = "A";
+          };
+          dash = {
+            prefix = "SUPER";
+            suffix = "D";
+          };
+          bluetooth = {
+            prefix = "SUPER";
+            suffix = "B";
+          };
+          pins = {
+            prefix = "SUPER";
+            suffix = "Q";
+          };
+          kanban = {
+            prefix = "SUPER";
+            suffix = "N";
+          };
+          launcher = {
+            prefix = "SUPER";
+            suffix = "R";
+          };
+          tmux = {
+            prefix = "SUPER";
+            suffix = "T";
+          };
+          cliphist = {
+            prefix = "SUPER";
+            suffix = "V";
+          };
+          toolbox = {
+            prefix = "SUPER";
+            suffix = "S";
+          };
+          overview = {
+            prefix = "SUPER";
+            suffix = "TAB";
+          };
+          wallpapers = {
+            prefix = "SUPER";
+            suffix = "COMMA";
+          };
+          randwall = {
+            prefix = "SUPER SHIFT";
+            suffix = "COMMA";
+          };
+          mixer = {
+            prefix = "SUPER";
+            suffix = "M";
+          };
+          emoji = {
+            prefix = "SUPER";
+            suffix = "PERIOD";
+          };
+          power = {
+            prefix = "SUPER";
+            suffix = "ESCAPE";
+          };
+          caffeine = {
+            prefix = "SUPER SHIFT";
+            suffix = "M";
+          };
+          restart_inspector = {
+            prefix = "SUPER CTRL ALT";
+            suffix = "B";
+          };
         };
         description = "Keybindings for various Ax-Shell actions.";
       };
@@ -481,10 +590,11 @@ in
     ];
 
     home.file."${paths.matugenConfig}" = {
-      source = let
-        finalMatugenSettings = lib.recursiveUpdate configs.matugenDefault cfg.matugen.extraSettings;
-      in
-      matugenTOMLFormat.generate "matugen-config.toml" finalMatugenSettings;
+      source =
+        let
+          finalMatugenSettings = lib.recursiveUpdate configs.matugenDefault cfg.matugen.extraSettings;
+        in
+        matugenTOMLFormat.generate "matugen-config.toml" finalMatugenSettings;
     };
 
     home.file."${paths.faceIconFile}" = {

@@ -16,8 +16,17 @@ stdenv.mkDerivation {
   version = "unstable-${self.shortRev or "dirty"}";
   src = self;
 
-  nativeBuildInputs = [ wrapGAppsHook3 pkg-config makeWrapper gtk3 ];
-  buildInputs = [ ax-shell-python tabler-icons-font ] ++ runtimeDeps;
+  nativeBuildInputs = [
+    wrapGAppsHook3
+    pkg-config
+    makeWrapper
+    gtk3
+  ];
+  buildInputs = [
+    ax-shell-python
+    tabler-icons-font
+  ]
+  ++ runtimeDeps;
   dontWrapQtApps = true;
 
   installPhase = ''
