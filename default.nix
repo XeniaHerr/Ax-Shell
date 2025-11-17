@@ -17,7 +17,7 @@ stdenv.mkDerivation {
   src = self;
 
   nativeBuildInputs = [ wrapGAppsHook3 pkg-config makeWrapper gtk3 ];
-  buildInputs = [ ax-shell-python tabler-icons-font ] ++ runtimeDeps;
+  propagatedbuildInputs = [ ax-shell-python tabler-icons-font ] ++ runtimeDeps;
   dontWrapQtApps = true;
 
   installPhase = ''
