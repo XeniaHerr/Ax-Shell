@@ -139,7 +139,9 @@ let
           --set AX_SHELL_MATUGEN_BIN "${binaries.matugen}" \
           --set XCURSOR_THEME "${cfg.settings.cursor.theme}" \
           --set XCURSOR_SIZE "${toString cfg.settings.cursor.size}" \
-          --prefix XCURSOR_PATH : "${cfg.settings.cursor.package}/share/icons"
+          --prefix XCURSOR_PATH : "${cfg.settings.cursor.package}/share/icons \
+          --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
+          --prefix GIO_EXTRA_MODULES : $$GIO_EXTRA_MODULES"
       '';
     };
 
@@ -180,7 +182,7 @@ let
       if [ ! -f "$HYPR_COLORS_PATH" ] || [ ! -f "$CSS_COLORS_PATH" ]; then
         echo "Ax-Shell: Color scheme not found. Generating from wallpaper."
         mkdir -p "$(dirname "$HYPR_COLORS_PATH")" "$(dirname "$CSS_COLORS_PATH")"
-        ${binaries.matugen} image "$CURRENT_WALL_PATH"
+p        ${binaries.matugen} image "$CURRENT_WALL_PATH"
       fi
     '';
   };
