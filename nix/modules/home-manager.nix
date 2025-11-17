@@ -141,7 +141,7 @@ let
           --set XCURSOR_SIZE "${toString cfg.settings.cursor.size}" \
           --prefix XCURSOR_PATH : "${cfg.settings.cursor.package}/share/icons \
           --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
-          --prefix GIO_EXTRA_MODULES : $$GIO_EXTRA_MODULES"
+          --prefix GIO_EXTRA_MODULES : "$GIO_EXTRA_MODULES"
       '';
     };
 
