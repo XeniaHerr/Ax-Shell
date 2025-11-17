@@ -90,7 +90,7 @@
             ps_.setproctitle
             ps_.toml
             ps_.watchdog
-#            ps_.pygobject-stubs
+            ps_.pygobject-stubs
           ];
 
         ax-shell-python = python.withPackages ax-shell-python-packages;
