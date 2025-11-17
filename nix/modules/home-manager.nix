@@ -129,7 +129,8 @@ let
     in
     pkgs.symlinkJoin {
       name = "ax-shell-with-declarative-config";
-      paths = [ cfg.package ];
+      paths = [ cfg.package];
+      buildInputs [ cfg.package];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/ax-shell \
