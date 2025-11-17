@@ -20,6 +20,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ ax-shell-python tabler-icons-font ] ++ runtimeDeps;
   propagatedBuildInputs = buildInputs;
   dontWrapQtApps = true;
+  dontWrapPythonPrograms = true;
 
   installPhase = ''
     runHook preInstall;
