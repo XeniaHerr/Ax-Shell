@@ -11,13 +11,14 @@
   adwaita-icon-theme,
   tabler-icons-font,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "ax-shell";
   version = "unstable-${self.shortRev or "dirty"}";
   src = self;
 
   nativeBuildInputs = [ wrapGAppsHook3 pkg-config makeWrapper gtk3 ];
   buildInputs = [ ax-shell-python tabler-icons-font ] ++ runtimeDeps;
+  propagatedBuildInputs = buildInputs;
   dontWrapQtApps = true;
 
   installPhase = ''
